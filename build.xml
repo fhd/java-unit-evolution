@@ -1,0 +1,44 @@
+<project name="JavaUnitEvolution" default="all" basedir=".">
+	<property name="src" location="src"/>
+	<property name="lib" location="lib"/>
+	<property name="build" location="build"/>
+	<property name="dist" location="dist"/>
+	<property name="doc" location="doc"/>
+
+	<path id="class.path">
+		<fileset dir="lib">
+			<include name="**/*.jar"/>
+		</fileset>
+	</path>
+
+	<target name="all" depends="dist"/>
+
+	<target name="compile">
+		<mkdir dir="${build}"/>
+		<javac srcdir="${src}" destdir="${build}" debug="true"
+		       classpathref="class.path"/>
+	</target>
+
+	<target name="dist" depends="compile">
+		<mkdir dir="${dist}"/>
+		<jar jarfile="${dist}/${ant.project.name}.jar">
+			<manifest>
+				<attribute name="Main-Class" value="${main.class}"/>
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="clean">
+		<delete dir="${build}"/>
+		<delete dir="${dist}"/>
+		<delete dir="${doc}"/>
+	</target>
+
+	<target name="javadocs">
+		<javadoc destdir="${doc}">
+			<fileset dir="${src}">
+				<include name="**/*.java"/>
+			</fileset>
+		</javadoc>
+	</target>
+</project>
