@@ -2,6 +2,8 @@ package javaunitevolution.core;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.jgap.InvalidConfigurationException;
@@ -16,6 +18,7 @@ public class JavaUnitEvolution {
     private static Logger LOGGER = Logger.getLogger(JavaUnitEvolution.class);
     private static GPGenotype gp;
     private static Method methodToEvolve;
+    private static List<Method> operations;
     private static boolean finished = false;
     private static int timeout = 300000;
     private static int populationSize = 500;
@@ -23,7 +26,8 @@ public class JavaUnitEvolution {
     private static int maxCrossoverDepth = 17;
     private static int maxInitialNodes = 20; // XXX: Why is this necessary?
 
-    public static <T> T evolve(Class<T> classToEvolve, Class<?> testClass) {
+    public static <T> T evolve(Class<T> classToEvolve, Class<?> operationClass,
+                               Class<?> testClass) {
         if (gp == null) {
             // This is executed if the evolutionary process has not yet begun.
             methodToEvolve = null;
@@ -35,9 +39,43 @@ public class JavaUnitEvolution {
                 throw new RuntimeException("Unable to find a method suitable"
                                            + "for evolution on "
                                            + classToEvolve);
+
+            LOGGER.info("The following Method will be evolved: "
+                        + methodToEvolve.toString());
+            
+            operations = new LinkedList<Method>();
+            for (Method operation: operationClass.getMethods()) {
+                String opName = operation.getName();
+                if (!opName.equals("getClass")
+                    && !opName.equals("hashCode")
+                    && !opName.equals("getClass")
+                    && !opName.equals("hashCode")
+                    && !opName.equals("equals")
+                    && !opName.equals("toString")
+                    && !opName.equals("notify")
+                    && !opName.equals("notifyAll")
+                    && !opName.equals("wait"))
+                    operations.add(operation);
+            }
+            
+            if (operations.isEmpty())
+                throw new RuntimeException("Unable to find any operations on "
+                                           + operationClass);
+
+            StringBuilder operationsStringBuilder = new StringBuilder();
+            for (Method operation: operations) {
+                operationsStringBuilder.append(operation.toString());
+                if (operation != operations.get(operations.size() - 1))
+                    operationsStringBuilder.append(", ");
+            }
+            LOGGER.info("The following operations from " + operationClass
+                        + " will be used: "
+                        + operationsStringBuilder.toString());
+            
             try {
                 GPProblem problem = new GenericProblem(createConfig(testClass),
-                                                       methodToEvolve);
+                                                       methodToEvolve,
+                                                       operations);
                 gp = problem.create();
                 gp.setVerboseOutput(true);
                 evolveProgram();

@@ -13,7 +13,9 @@ import org.junit.runners.Parameterized.Parameters;
 
 @RunWith(Parameterized.class)
 public class AddingTest {	
-    private Adding adding = JavaUnitEvolution.evolve(Adding.class, getClass());
+    private Adding adding = JavaUnitEvolution.evolve(Adding.class,
+                                                     AddingOperations.class,
+                                                     getClass());
     private int a, b;
 
     @Parameters

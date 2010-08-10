@@ -7,63 +7,46 @@ import java.util.List;
 import org.jgap.InvalidConfigurationException;
 import org.jgap.gp.CommandGene;
 import org.jgap.gp.GPProblem;
-import org.jgap.gp.function.Add;
-import org.jgap.gp.function.Multiply;
-import org.jgap.gp.function.Subtract;
 import org.jgap.gp.impl.GPConfiguration;
 import org.jgap.gp.impl.GPGenotype;
 
 class GenericProblem extends GPProblem {
     private Method methodToEvolve;
+    private List<Method> operations;
 
-    public GenericProblem(GPConfiguration config, Method methodToEvolve)
+    public GenericProblem(GPConfiguration config, Method methodToEvolve,
+                          List<Method> operations)
         throws InvalidConfigurationException {
         super(config);
         this.methodToEvolve = methodToEvolve;
+        this.operations = operations;
     }
 
     @Override
     public GPGenotype create() throws InvalidConfigurationException {
         // Generate operands from the method's interface
         Class<?>[] types = {
-                classToCommandGene(methodToEvolve.getReturnType())
+                PrimitiveUtils.toCommandGene(methodToEvolve.getReturnType())
         };
         
         List<Class<?>> argTypesList = new LinkedList<Class<?>>();
         for (Class<?> argType: methodToEvolve.getParameterTypes())
-            argTypesList.add(classToCommandGene(argType));
+            argTypesList.add(PrimitiveUtils.toCommandGene(argType));
 
         Class<?>[][] argTypes = new Class<?>[][] {
                 argTypesList.toArray(new Class<?>[argTypesList.size()])
         };
 
-        // TODO: Generate operations from interface
+        // Generate operations from interface
         GPConfiguration config = getGPConfiguration();
-        CommandGene[][] nodeSets = {{
-            new Add(config, CommandGene.IntegerClass),
-            new Subtract(config, CommandGene.IntegerClass),
-            new Multiply(config, CommandGene.IntegerClass)
-        }};
+        List<CommandGene> nodeSetOperations = new LinkedList<CommandGene>();
+        for (Method operation: operations)
+            nodeSetOperations.add(new GenericCommand(config, operation));
+        
+        CommandGene[][] nodeSets = { nodeSetOperations.toArray(
+                new CommandGene[nodeSetOperations.size()])};
 
         return GPGenotype.randomInitialGenotype(config, types, argTypes,
                 nodeSets, JavaUnitEvolution.getMaxInitialNodes(), true);
-    }
-
-    private static Class<?> classToCommandGene(Class<?> clazz) {
-        if (PrimitiveUtils.isBoolean(clazz))
-            return CommandGene.BooleanClass;
-        else if (PrimitiveUtils.isCharacter(clazz))
-            return CommandGene.CharacterClass;
-        else if (PrimitiveUtils.isDouble(clazz))
-            return CommandGene.DoubleClass;
-        else if (PrimitiveUtils.isFloat(clazz))
-            return CommandGene.FloatClass;
-        else if (PrimitiveUtils.isInteger(clazz))
-            return CommandGene.IntegerClass;
-        else if (PrimitiveUtils.isLong(clazz))
-            return CommandGene.LongClass;
-        else if (PrimitiveUtils.isVoid(clazz))
-            return CommandGene.VoidClass;
-        return null;
     }
 }
