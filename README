@@ -5,14 +5,16 @@ A framework that combines JUnit (test-driven development) and JGAP
 
 This is open source software, licensed under the I-don't-know-yet license.
 
+REQUIREMENTS
+============
+- Maven2
+
 COMPILING
 =========
-In order to compile Java Unit Evolution, you will need Maven2.
-
-Once you have it, install JGAP as follows:
-  mvn install:install-file -Dfile=jgap.jar -DgroupId=jgap -DartifactId=jgap \
-  -Dpackaging=jar -Dversion=3.3.4 -DgeneratePom=true
+Install JGAP as follows:
+mvn install:install-file -Dfile=jgap.jar -DgroupId=jgap -DartifactId=jgap \
+-Dpackaging=jar -Dversion=3.3.4 -DgeneratePom=true
 
 Now you can build Java Unit Evolution:
-  mvn package
+mvn package
 
