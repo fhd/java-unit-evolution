@@ -6,7 +6,7 @@
 	<packaging>jar</packaging>
 	<version>0.1.0-SNAPSHOT</version>
 	<name>javaunitevolution</name>
-	<url>http://maven.apache.org</url>
+	<url>http://ubercode.de</url>
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
