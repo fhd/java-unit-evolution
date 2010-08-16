@@ -1,19 +1,17 @@
 package javaunitevolution.samples.adding;
 
-public interface Adding {
-    int add(int a, int b);
+public abstract class Adding {
+    public abstract int add(int a, int b);
     
-    static class Operations {
-        static int add(int a, int b) {
-            return a + b;
-        }
-        
-        static int subtract(int a, int b) {
-            return a - b;
-        }
-        
-        static int multiply(int a, int b) {
-            return a * b;
-        }   
+    public static int operationAdd(int a, int b) {
+        return a + b;
+    }
+    
+    public static int operationSubtract(int a, int b) {
+        return a - b;
+    }
+    
+    public static int operationMultiply(int a, int b) {
+        return a * b;
     }
 }

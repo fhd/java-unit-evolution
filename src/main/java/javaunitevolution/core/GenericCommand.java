@@ -7,7 +7,6 @@ import org.jgap.gp.CommandGene;
 import org.jgap.gp.impl.GPConfiguration;
 import org.jgap.gp.impl.ProgramChromosome;
 
-// TODO: Proper error handling
 public class GenericCommand extends CommandGene {
     private static final long serialVersionUID = 1L;
     private Method operation;
@@ -31,8 +30,7 @@ public class GenericCommand extends CommandGene {
         try {
             return (Boolean) operation.invoke(null, args);
         } catch (Exception e) {
-            e.printStackTrace();
-            return false;
+            throw fail(e);
         }
     }
     
@@ -43,8 +41,7 @@ public class GenericCommand extends CommandGene {
         try {
             return (Double) operation.invoke(null, args);
         } catch (Exception e) {
-            e.printStackTrace();
-            return 0;
+            throw fail(e);
         }
     }
     
@@ -55,8 +52,7 @@ public class GenericCommand extends CommandGene {
         try {
             return (Float) operation.invoke(null, args);
         } catch (Exception e) {
-            e.printStackTrace();
-            return 0;
+            throw fail(e);
         }
     }
     
@@ -67,8 +63,7 @@ public class GenericCommand extends CommandGene {
         try {
             return (Integer) operation.invoke(null, args);
         } catch (Exception e) {
-            e.printStackTrace();
-            return 0;
+            throw fail(e);
         }
     }
     
@@ -79,8 +74,7 @@ public class GenericCommand extends CommandGene {
         try {
             return (Long) operation.invoke(null, args);
         } catch (Exception e) {
-            e.printStackTrace();
-            return 0;
+            throw fail(e);
         }
     }
     
@@ -89,8 +83,7 @@ public class GenericCommand extends CommandGene {
         try {
             return (Object) operation.invoke(null, args);
         } catch (Exception e) {
-            e.printStackTrace();
-            return 0;
+            throw fail(e);
         }
     }
     
@@ -101,8 +94,13 @@ public class GenericCommand extends CommandGene {
         try {
             operation.invoke(null, args);
         } catch (Exception e) {
-            e.printStackTrace();
+            fail(e);
         }
+    }
+
+    private static RuntimeException fail(Exception e){
+        return new RuntimeException("Unexpected exception while invoking "
+                                    + "operation.", e);
     }
     
     @Override

@@ -12,8 +12,12 @@ REQUIREMENTS
 COMPILING
 =========
 Install JGAP as follows:
-mvn install:install-file -Dfile=jgap.jar -DgroupId=jgap -DartifactId=jgap \
--Dpackaging=jar -Dversion=3.3.4 -DgeneratePom=true
+cd lib/jgap
+mvn install:install-file -Dfile=jgap.jar -DpomFile=pom.xml
+
+Install Javassist as follows:
+cd lib/jgap
+mvn install:install-file -Dfile=javassist.jar -DpomFile=pom.xml
 
 Now you can build Java Unit Evolution:
 mvn package

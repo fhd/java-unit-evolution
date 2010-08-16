@@ -1,9 +1,12 @@
 package javaunitevolution.core;
 
 import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
+import java.lang.reflect.Modifier;
 import java.util.LinkedList;
 import java.util.List;
+
+import javassist.util.proxy.MethodFilter;
+import javassist.util.proxy.ProxyFactory;
 
 import org.apache.log4j.Logger;
 import org.jgap.InvalidConfigurationException;
@@ -26,41 +29,39 @@ public class JavaUnitEvolution {
     private static int maxCrossoverDepth = 17;
     private static int maxInitialNodes = 20; // XXX: Why is this necessary?
 
-    public static <T> T evolve(Class<T> classToEvolve, Class<?> operationClass,
-                               Class<?> testClass) {
+    public static <T> T evolve(Class<T> classToEvolve, Class<?> testClass) {
         if (gp == null) {
             // This is executed if the evolutionary process has not yet begun.
             methodToEvolve = null;
-            for (Method method: classToEvolve.getMethods()) {
-                methodToEvolve = method;
-                break;
+            operations = new LinkedList<Method>();
+            for (Method method: classToEvolve.getDeclaredMethods()) {
+                int modifiers = method.getModifiers();
+                if (Modifier.isPublic(modifiers)
+                    && Modifier.isAbstract(modifiers)) {
+                    if (methodToEvolve != null)
+                        LOGGER.warn("Evolution of only one method is"
+                                    + "allowed, ignoring " + method);
+                    else
+                        methodToEvolve = method;
+                } else if (Modifier.isPublic(modifiers)
+                           && Modifier.isStatic(modifiers))
+                    operations.add(method);
+                else
+                    LOGGER.warn("Ignored method " + method);
             }
             if (methodToEvolve == null)
                 throw new RuntimeException("Unable to find a method suitable"
                                            + "for evolution on "
-                                           + classToEvolve);
+                                           + classToEvolve + ", such methods "
+                                           + "have to be public and abstract");
 
             LOGGER.info("The following Method will be evolved: "
                         + methodToEvolve.toString());
-            
-            operations = new LinkedList<Method>();
-            for (Method operation: operationClass.getMethods()) {
-                String opName = operation.getName();
-                if (!opName.equals("getClass")
-                    && !opName.equals("hashCode")
-                    && !opName.equals("getClass")
-                    && !opName.equals("hashCode")
-                    && !opName.equals("equals")
-                    && !opName.equals("toString")
-                    && !opName.equals("notify")
-                    && !opName.equals("notifyAll")
-                    && !opName.equals("wait"))
-                    operations.add(operation);
-            }
-            
+
             if (operations.isEmpty())
                 throw new RuntimeException("Unable to find any operations on "
-                                           + operationClass);
+                                           + classToEvolve + ", such methods "
+                                           + "have to be public and static");
 
             StringBuilder operationsStringBuilder = new StringBuilder();
             for (Method operation: operations) {
@@ -68,8 +69,7 @@ public class JavaUnitEvolution {
                 if (operation != operations.get(operations.size() - 1))
                     operationsStringBuilder.append(", ");
             }
-            LOGGER.info("The following operations from " + operationClass
-                        + " will be used: "
+            LOGGER.info("The following operations will be used: "
                         + operationsStringBuilder.toString());
             
             try {
@@ -132,9 +132,24 @@ public class JavaUnitEvolution {
 
     private static <T> T createImplementation(IGPProgram program,
                                               Class<T> clazz) {
-        return clazz.cast(Proxy.newProxyInstance(clazz.getClassLoader(),
-                new Class[] { clazz },
-                new GPProgramInvocationHandler(program, methodToEvolve)));		
+        ProxyFactory factory = new ProxyFactory();
+        factory.setSuperclass(clazz);
+        factory.setFilter(
+                new MethodFilter() {
+                    @Override
+                    public boolean isHandled(Method method) {
+                        return Modifier.isAbstract(method.getModifiers());
+                    }
+                }
+            );
+
+        try {
+            return clazz.cast(factory.create(new Class<?>[0], new Object[0],
+                    new GPProgramMethodHandler(program, methodToEvolve)));
+        } catch (Exception e) {
+            throw new RuntimeException("Unable to invoke generated program",
+                                       e);
+        }		
     }
 
     public static void setTimeout(int timeout) {

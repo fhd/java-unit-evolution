@@ -15,8 +15,8 @@ public class Timeout extends Thread {
             for (passed = 0; passed < total; passed++)
                 Thread.sleep(1);
         } catch (InterruptedException e) {
-            // TODO: Proper error handling
-            e.printStackTrace();
+            throw new RuntimeException("Unexpected exception while waiting on "
+                                       + "thread", e);
         } finally {
             finished = true;
         }

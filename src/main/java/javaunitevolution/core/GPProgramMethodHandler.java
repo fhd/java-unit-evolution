@@ -1,31 +1,32 @@
 package javaunitevolution.core;
 
-import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+
+import javassist.util.proxy.MethodHandler;
 
 import org.jgap.gp.IGPProgram;
 
-class GPProgramInvocationHandler implements InvocationHandler {
+class GPProgramMethodHandler implements MethodHandler {
 
     IGPProgram program;
     Method methodToInvoke;
 
-    public GPProgramInvocationHandler(IGPProgram program,
+    public GPProgramMethodHandler(IGPProgram program,
                                       Method methodToInvoke) {
         this.program = program;
         this.methodToInvoke = methodToInvoke;
     }
-
+    
     @Override
-    public Object invoke(Object proxy, Method method, Object[] args)
-        throws Throwable {
-        if (!methodToInvoke.equals(method))
+    public Object invoke(Object self, Method thisMethod,
+                         Method proceed, Object[] args) throws Throwable {
+        if (!methodToInvoke.equals(thisMethod))
             throw new RuntimeException("Test case invoked method "
-                                       + method.toString()
+                                       + thisMethod.toString()
                                        + " which was not subject to "
                                        + "evolution.");
 
-        Class<?> returnType = method.getReturnType();
+        Class<?> returnType = thisMethod.getReturnType();
 
         if (PrimitiveUtils.isBoolean(returnType))
             return program.execute_boolean(0, args);
