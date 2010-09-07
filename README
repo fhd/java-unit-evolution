@@ -15,10 +15,6 @@ Install JGAP as follows:
 cd lib/jgap
 mvn install:install-file -Dfile=jgap.jar -DpomFile=pom.xml
 
-Install Javassist as follows:
-cd lib/jgap
-mvn install:install-file -Dfile=javassist.jar -DpomFile=pom.xml
-
 Now you can build Java Unit Evolution:
 mvn package
 
