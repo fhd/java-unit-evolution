@@ -1,4 +1,4 @@
-package de.ubercode.javaunitevolution.samples.triangle;
+package de.ubercode.javaunitevolution.samples.trianglePerimeter;
 
 /**
  * This sample aims to evolve a method that will calculate the perimeter of a

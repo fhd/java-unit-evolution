@@ -1,4 +1,4 @@
-package de.ubercode.javaunitevolution.samples.triangle;
+package de.ubercode.javaunitevolution.samples.trianglePerimeter;
 
 import static org.junit.Assert.*;
 
