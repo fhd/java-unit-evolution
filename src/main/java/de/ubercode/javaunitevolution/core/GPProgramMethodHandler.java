@@ -1,4 +1,4 @@
-package javaunitevolution.core;
+package de.ubercode.javaunitevolution.core;
 
 import java.lang.reflect.Method;
 

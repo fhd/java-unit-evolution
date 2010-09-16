@@ -1,4 +1,4 @@
-package javaunitevolution.samples.adding;
+package de.ubercode.javaunitevolution.samples.adding;
 
 public abstract class Adding {
     public abstract int add(int a, int b);

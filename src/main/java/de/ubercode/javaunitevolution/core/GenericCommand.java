@@ -1,4 +1,4 @@
-package javaunitevolution.core;
+package de.ubercode.javaunitevolution.core;
 
 import java.lang.reflect.Method;
 
@@ -94,11 +94,12 @@ public class GenericCommand extends CommandGene {
         try {
             operation.invoke(null, args);
         } catch (Exception e) {
-            fail(e);
+            throw fail(e);
         }
     }
 
-    private static RuntimeException fail(Exception e){
+    private static RuntimeException fail(Exception e) {
+        e.printStackTrace();
         return new RuntimeException("Unexpected exception while invoking "
                                     + "operation.", e);
     }

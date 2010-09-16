@@ -1,6 +1,5 @@
-package javaunitevolution.samples.adding;
+package de.ubercode.javaunitevolution.samples.adding;
 
-import javaunitevolution.core.JavaUnitEvolution;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -10,6 +9,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
+
+import de.ubercode.javaunitevolution.core.*;
 
 @RunWith(Parameterized.class)
 public class AddingTest {	

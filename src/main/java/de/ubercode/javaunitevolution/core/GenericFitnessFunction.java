@@ -1,4 +1,4 @@
-package javaunitevolution.core;
+package de.ubercode.javaunitevolution.core;
 
 import org.apache.log4j.Logger;
 import org.jgap.gp.GPFitnessFunction;

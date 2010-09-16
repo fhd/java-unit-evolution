@@ -1,4 +1,4 @@
-package javaunitevolution.core;
+package de.ubercode.javaunitevolution.core;
 
 public class Timeout extends Thread {
     private int passed;
