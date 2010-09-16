@@ -4,7 +4,7 @@
                              http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.ubercode.javaunitevolution</groupId>
-    <artifactId>javaunitevolution</artifactId>
+    <artifactId>java-unit-evolution</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>Java Unit Evolution</name>
