@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.ubercode.javaunitevolution</groupId>
     <artifactId>java-unit-evolution</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>0.1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>Java Unit Evolution</name>
     <description>A Java framework that uses unit testing and genetic programming to evolve programs.</description>
