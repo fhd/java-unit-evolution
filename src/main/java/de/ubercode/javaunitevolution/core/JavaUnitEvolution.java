@@ -1,23 +1,20 @@
 package de.ubercode.javaunitevolution.core;
 
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.util.LinkedList;
-import java.util.List;
+import java.lang.reflect.*;
+import java.util.*;
 
-import javassist.util.proxy.MethodFilter;
-import javassist.util.proxy.ProxyFactory;
+import javassist.util.proxy.*;
 
-import org.apache.log4j.Logger;
-import org.jgap.InvalidConfigurationException;
-import org.jgap.gp.GPProblem;
-import org.jgap.gp.IGPProgram;
-import org.jgap.gp.impl.DeltaGPFitnessEvaluator;
-import org.jgap.gp.impl.GPConfiguration;
-import org.jgap.gp.impl.GPGenotype;
+import org.apache.log4j.*;
+import org.jgap.*;
+import org.jgap.gp.*;
+import org.jgap.gp.impl.*;
 
+/**
+ * The API of the Java Unit Evolution framework.
+ */
 public class JavaUnitEvolution {
-    static IGPProgram currentProgram;
+    static IGPProgram currentProgram; // XXX: This is not nice.
     private static Logger LOGGER = Logger.getLogger(JavaUnitEvolution.class);
     private static GPGenotype gp;
     private static Method methodToEvolve;
@@ -29,6 +26,26 @@ public class JavaUnitEvolution {
     private static int maxCrossoverDepth = 17;
     private static int maxInitialNodes = 20; // XXX: Why is this necessary?
 
+    /**
+     * Evolves an implementation of the supplied abstract class using the
+     * supplied test class as a fitness measure. This method should be called
+     * from a test class and the returned object should be tested. When the
+     * test class is executed in any test runner, an implementation will be
+     * evolved and tested automatically.
+     * @param classToEvolve The abstract class whose implementation is to be
+     *                      evolved. Its first abstract method will be evolved
+     *                      while all others are ignored, it is therefore
+     *                      recommended to include only one abstract method in
+     *                      the signature. All other methods have to be static
+     *                      and will be used by the evolved implementation to
+     *                      pass the tests.
+     * @param testClass The JUnit 4 test class whose test cases will be used to
+     *                  measure the fitness of each evolved implementation.
+     *                  It is vital for the success of the evolutionary process
+     *                  that this class contains sufficient reasonable test
+     *                  cases.
+     * @return The evolved implementation of the class.
+     */
     public static <T> T evolve(Class<T> classToEvolve, Class<?> testClass) {
         if (gp == null) {
             // This is executed if the evolutionary process has not yet begun.
@@ -86,8 +103,10 @@ public class JavaUnitEvolution {
         }
 
         if (!finished)
-            // This is the implementation returned to each test case
-            // during the fitness function's execution.
+            /*
+             * This is the implementation returned to each test case
+             * during the fitness function's execution.
+             */
             return createImplementation(currentProgram, classToEvolve);
 
         // This is the final implementation, capable of passing all unit tests. 
@@ -152,43 +171,79 @@ public class JavaUnitEvolution {
         }		
     }
 
-    public static void setTimeout(int timeout) {
-        JavaUnitEvolution.timeout = timeout;
-    }
-
+    /**
+     * @return The maximum number of milliseconds the evolutionary process may
+     *         last.
+     */
     public static int getTimeout() {
         return timeout;
     }
 
-    public static void setPopulationSize(int populationSize) {
-        JavaUnitEvolution.populationSize = populationSize;
+    /**
+     * @param timeout The maximum number of milliseconds the evolutionary
+     *                process may last.
+     */
+    public static void setTimeout(int timeout) {
+        JavaUnitEvolution.timeout = timeout;
     }
-
+    
+    /**
+     * @return The size of the genetic programming population.
+     */
     public static int getPopulationSize() {
         return populationSize;
     }
 
+    /**
+     * @param populationSize The size of the genetic programming population.
+     */
+    public static void setPopulationSize(int populationSize) {
+        JavaUnitEvolution.populationSize = populationSize;
+    }
+
+    /**
+     * @return The maximum depth of initial program trees.
+     */
+    public static int getMaxInitDepth() {
+        return maxInitDepth;
+    }
+    
+    /**
+     * @param maxInitDepth The maximum depth of initial program trees.
+     */
     public static void setMaxInitDepth(int maxInitDepth) {
         JavaUnitEvolution.maxInitDepth = maxInitDepth;
     }
 
-    public static int getMaxInitDepth() {
-        return maxInitDepth;
-    }
-
-    public static void setMaxCrossoverDepth(int maxCrossoverDepth) {
-        JavaUnitEvolution.maxCrossoverDepth = maxCrossoverDepth;
-    }
-
+    /**
+     * @return The maximum depth of subtrees of the program tree that can be
+     *         used for crossover.
+     */
     public static int getMaxCrossoverDepth() {
         return maxCrossoverDepth;
     }
 
-    public static void setMaxInitialNodes(int maxInitialNodes) {
-        JavaUnitEvolution.maxInitialNodes = maxInitialNodes;
+    /**
+     * @param maxCrossoverDepth The maximum depth of subtrees of the program
+     *                          tree that can be used for crossover.
+     */
+    public static void setMaxCrossoverDepth(int maxCrossoverDepth) {
+        JavaUnitEvolution.maxCrossoverDepth = maxCrossoverDepth;
     }
 
+    /**
+     * @return maxInitialNodes The maximum number of nodes of initial program
+     *                         trees.
+     */
     public static int getMaxInitialNodes() {
         return maxInitialNodes;
+    }
+
+    /**
+     * @param maxInitialNodes The maximum number of nodes of initial program
+     *                        trees.
+     */
+    public static void setMaxInitialNodes(int maxInitialNodes) {
+        JavaUnitEvolution.maxInitialNodes = maxInitialNodes;
     }
 }

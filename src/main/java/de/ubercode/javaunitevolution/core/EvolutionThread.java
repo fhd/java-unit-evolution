@@ -1,19 +1,25 @@
 package de.ubercode.javaunitevolution.core;
 
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.locks.*;
 
-import org.apache.log4j.Logger;
-import org.jgap.gp.IGPProgram;
-import org.jgap.gp.impl.GPGenotype;
+import org.apache.log4j.*;
+import org.jgap.gp.*;
+import org.jgap.gp.impl.*;
 
+/**
+ * The thread that will perform the evolution.
+ */
 public class EvolutionThread extends Thread {
     private static Logger logger = Logger.getLogger(EvolutionThread.class);
     private GPGenotype gp;
     private boolean finished = false;
-    // OPTME: Find a more elegant locking solution
+    // XXX: Find a more elegant locking solution
     private Lock finishedLock = new ReentrantLock();
 
+    /**
+     * Creates an evolution thread.
+     * @param gp The genotype responsible for the evolution.
+     */
     public EvolutionThread(GPGenotype gp) {
         this.gp = gp;
     }
@@ -35,6 +41,9 @@ public class EvolutionThread extends Thread {
         finishedLock.unlock();
     }
 
+    /**
+     * @return <code>true</code> if the evolution has ended.
+     */
     public boolean isFinished() {
         finishedLock.lock();
         boolean b = finished;

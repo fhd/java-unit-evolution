@@ -1,18 +1,26 @@
 package de.ubercode.javaunitevolution.core;
 
-import java.lang.reflect.Method;
+import java.lang.reflect.*;
 
-import javassist.util.proxy.MethodHandler;
+import javassist.util.proxy.*;
 
-import org.jgap.gp.IGPProgram;
+import org.jgap.gp.*;
 
+/**
+ * A method handler that invokes the supplied GP program.
+ */
 class GPProgramMethodHandler implements MethodHandler {
-
     IGPProgram program;
     Method methodToInvoke;
 
+    /**
+     * Creates a new method handler.
+     * @param program The GP program to invoke.
+     * @param methodToInvoke The method whose invocations are processed by this
+     *                       handler.
+     */
     public GPProgramMethodHandler(IGPProgram program,
-                                      Method methodToInvoke) {
+                                  Method methodToInvoke) {
         this.program = program;
         this.methodToInvoke = methodToInvoke;
     }

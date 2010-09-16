@@ -1,27 +1,36 @@
 package de.ubercode.javaunitevolution.core;
 
-import java.lang.reflect.Method;
+import java.lang.reflect.*;
 
-import org.jgap.InvalidConfigurationException;
-import org.jgap.gp.CommandGene;
-import org.jgap.gp.impl.GPConfiguration;
-import org.jgap.gp.impl.ProgramChromosome;
+import org.jgap.*;
+import org.jgap.gp.*;
+import org.jgap.gp.impl.*;
 
+/**
+ * A command that will execute a arbitrary Java method.
+ */
 public class GenericCommand extends CommandGene {
     private static final long serialVersionUID = 1L;
     private Method operation;
     
+    /**
+     * Creates a new generic command.
+     * @param conf The configuration to use.
+     * @param operation The operation to invoke when executed.
+     * @throws InvalidConfigurationException
+     */
     public GenericCommand(GPConfiguration conf, Method operation)
             throws InvalidConfigurationException {
         super(conf, operation.getParameterTypes().length,
               PrimitiveUtils.toCommandGene(operation.getReturnType()));
         this.operation = operation;
     }
-    
-    @Override
-    public Object execute(ProgramChromosome c, int n, Object[] args) {
-        return execute_object(c, n, args);
-    }
+   
+    /*
+     * TODO: All the execute methods are always called with the same number of
+     *       parameters as the method that is to be involved. Arity seems to be
+     *       ignored. 
+     */
     
     @Override
     public boolean execute_boolean(ProgramChromosome c, int n, Object[] args) {
@@ -99,7 +108,6 @@ public class GenericCommand extends CommandGene {
     }
 
     private static RuntimeException fail(Exception e) {
-        e.printStackTrace();
         return new RuntimeException("Unexpected exception while invoking "
                                     + "operation.", e);
     }

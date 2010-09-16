@@ -1,5 +1,6 @@
 package de.ubercode.javaunitevolution.samples.adding;
 
+// TODO: Get rid of this, it's just too simple.
 public abstract class Adding {
     public abstract int add(int a, int b);
     

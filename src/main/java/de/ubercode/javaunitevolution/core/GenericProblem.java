@@ -1,19 +1,32 @@
 package de.ubercode.javaunitevolution.core;
 
-import java.lang.reflect.Method;
-import java.util.LinkedList;
-import java.util.List;
+import java.lang.reflect.*;
+import java.util.*;
 
-import org.jgap.InvalidConfigurationException;
-import org.jgap.gp.CommandGene;
-import org.jgap.gp.GPProblem;
-import org.jgap.gp.impl.GPConfiguration;
-import org.jgap.gp.impl.GPGenotype;
+import org.jgap.*;
+import org.jgap.gp.*;
+import org.jgap.gp.impl.*;
 
+/**
+ * A genetic programming problem configuration that will attempt to set useful
+ * operations and operands from the method that is to be evolved.
+ */
 class GenericProblem extends GPProblem {
     private Method methodToEvolve;
     private List<Method> operations;
 
+    /**
+     * Creates a genetic programming problem that will generate operands from
+     * the method that is to be evolved and operations from the available
+     * operation methods respectively.
+     * @param config The GP configuration to use.
+     * @param methodToEvolve The method that is to be evolved. Will be used to
+     *                       generate the operands of the problem.
+     * @param operations Methods that can be used by the algorithm to implement
+     *                   the methods. Will be used to generate the operations
+     *                   of the problem.
+     * @throws InvalidConfigurationException
+     */
     public GenericProblem(GPConfiguration config, Method methodToEvolve,
                           List<Method> operations)
         throws InvalidConfigurationException {

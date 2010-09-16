@@ -1,17 +1,19 @@
 package de.ubercode.javaunitevolution.samples.adding;
 
+import static org.junit.Assert.*;
 
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.*;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.junit.*;
+import org.junit.runner.*;
+import org.junit.runners.*;
 import org.junit.runners.Parameterized.Parameters;
 
 import de.ubercode.javaunitevolution.core.*;
 
+/**
+ * The test case that determines the fitness of {@link Adding}.
+ */
 @RunWith(Parameterized.class)
 public class AddingTest {	
     private Adding adding = JavaUnitEvolution.evolve(Adding.class, getClass());
@@ -38,6 +40,6 @@ public class AddingTest {
 
     @Test
     public void add() {
-        Assert.assertEquals(a + b, adding.add(a, b));
+        assertEquals(a + b, adding.add(a, b));
     }
 }

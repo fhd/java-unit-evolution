@@ -1,18 +1,25 @@
 package de.ubercode.javaunitevolution.core;
 
-import org.apache.log4j.Logger;
-import org.jgap.gp.GPFitnessFunction;
-import org.jgap.gp.IGPProgram;
-import org.junit.runner.JUnitCore;
-import org.junit.runner.Result;
-import org.junit.runner.notification.Failure;
+import org.apache.log4j.*;
+import org.jgap.gp.*;
+import org.junit.runner.*;
+import org.junit.runner.notification.*;
 
+/**
+ * A fitness function that will invoke the supplied test case to measure
+ * program fitness.
+ */
 class GenericFitnessFunction extends GPFitnessFunction {
     private static Logger LOGGER =
         Logger.getLogger(GenericFitnessFunction.class);
     private static final long serialVersionUID = 1L;
     private Class<?> testClass;
 
+    /**
+     * Creates a new fitness function using the supplied test class.
+     * @param testClass The class containing the test cases used to assess
+     *                  the fitness of a program.
+     */
     public GenericFitnessFunction(Class<?> testClass) {
         this.testClass = testClass;
     }
@@ -35,8 +42,8 @@ class GenericFitnessFunction extends GPFitnessFunction {
 
     /**
      * Extracts the delta between the two values of an error.
-     * @param error the error from which to extract the delta.
-     * @return the calculated delta.
+     * @param error The error from which to extract the delta.
+     * @return The calculated delta.
      */
     private double extractDelta(AssertionError error) {
         // XXX: Make this more fault tolerant
@@ -57,7 +64,7 @@ class GenericFitnessFunction extends GPFitnessFunction {
                     return Math.abs(Integer.valueOf(expected) -
                                     Integer.valueOf(actual));
                 } catch (NumberFormatException e3) {
-                    // TODO: Try other datatypes
+                    // TODO: Try other data types
                     return 0.0;
                 }
             }
