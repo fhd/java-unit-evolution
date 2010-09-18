@@ -5,7 +5,7 @@ import org.jgap.gp.*;
 /**
  * Utility methods to work with Java primitives.
  */
-public class PrimitiveUtils {
+class PrimitiveUtils {
     /**
      * Checks whether the supplied class is a boolean type.
      * @param clazz The class to check.

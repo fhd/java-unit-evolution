@@ -112,7 +112,7 @@ public class JavaUnitEvolution {
 
         // This is the final implementation, capable of passing all unit tests. 
         ProgramChromosome allTimeBest = gp.getAllTimeBest().getChromosome(0);
-        // TODO: Store the implementation.
+        storeImplementation(allTimeBest, classToEvolve);
         return createImplementation(allTimeBest, classToEvolve);
     }
 
@@ -172,6 +172,11 @@ public class JavaUnitEvolution {
         } catch (Exception e) {
             throw new RuntimeException("Unable to invoke generated program", e);
         }		
+    }
+    
+    private static <T> void storeImplementation(ProgramChromosome chromosome,
+                                                Class<T> clazz) {
+        // TODO: Implement this method
     }
 
     /**

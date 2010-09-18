@@ -9,7 +9,7 @@ import org.jgap.gp.impl.*;
 /**
  * The thread that will perform the evolution.
  */
-public class EvolutionThread extends Thread {
+class EvolutionThread extends Thread {
     private static Logger logger = Logger.getLogger(EvolutionThread.class);
     private GPGenotype gp;
     private boolean finished = false;

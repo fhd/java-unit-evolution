@@ -3,7 +3,7 @@ package de.ubercode.javaunitevolution.core;
 /**
  * A thread that waits for a given time and then stop the supplied thread.
  */
-public class TimeoutThread extends Thread {
+class TimeoutThread extends Thread {
     private int timeout;
     private Thread thread;
 

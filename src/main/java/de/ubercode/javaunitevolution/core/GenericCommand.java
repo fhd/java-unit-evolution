@@ -9,7 +9,7 @@ import org.jgap.gp.impl.*;
 /**
  * A command that will execute a arbitrary Java method.
  */
-public class GenericCommand extends CommandGene {
+class GenericCommand extends CommandGene {
     private static final long serialVersionUID = 1L;
     private Method operation;
     

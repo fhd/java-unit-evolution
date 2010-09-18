@@ -4,7 +4,7 @@ package de.ubercode.javaunitevolution.core;
  * A thread that will wait for the specified time, keeping track of the elapsed
  * time.
  */
-public class Timeout extends Thread {
+class Timeout extends Thread {
     private int passed;
     private int total;
     private boolean finished;
