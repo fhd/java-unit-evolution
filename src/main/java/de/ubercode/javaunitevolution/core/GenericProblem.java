@@ -43,7 +43,7 @@ class GenericProblem extends GPProblem {
         };
 
         List<Class<?>> argTypesList = new LinkedList<Class<?>>();
-        for (Class<?> argType: methodToEvolve.getParameterTypes())
+        for (Class<?> argType : methodToEvolve.getParameterTypes())
             argTypesList.add(PrimitiveUtils.toCommandGene(argType));
 
         Class<?>[][] argTypes = new Class<?>[][] {
@@ -53,7 +53,7 @@ class GenericProblem extends GPProblem {
         // Generate operations from interface
         GPConfiguration config = getGPConfiguration();
         List<CommandGene> nodeSetOperations = new LinkedList<CommandGene>();
-        for (Method operation: operations)
+        for (Method operation : operations)
             nodeSetOperations.add(new GenericCommand(config, operation));
 
         CommandGene[][] nodeSets = { nodeSetOperations.toArray(

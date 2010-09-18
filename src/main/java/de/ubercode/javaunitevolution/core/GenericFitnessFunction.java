@@ -31,7 +31,7 @@ class GenericFitnessFunction extends GPFitnessFunction {
         if (result.getFailureCount() == 0)
             return 0.0;
         double delta = 0.0;
-        for (Failure failure: result.getFailures()) {
+        for (Failure failure : result.getFailures()) {
             Throwable t = failure.getException();
             if (t instanceof AssertionError)
                 delta += extractDelta((AssertionError) t);

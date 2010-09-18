@@ -51,7 +51,7 @@ public class JavaUnitEvolution {
             // This is executed if the evolutionary process has not yet begun.
             methodToEvolve = null;
             operations = new LinkedList<Method>();
-            for (Method method: classToEvolve.getDeclaredMethods()) {
+            for (Method method : classToEvolve.getDeclaredMethods()) {
                 int modifiers = method.getModifiers();
                 if (Modifier.isPublic(modifiers)
                     && Modifier.isAbstract(modifiers)) {
@@ -81,7 +81,7 @@ public class JavaUnitEvolution {
                                            + "have to be public and static");
 
             StringBuilder operationsStringBuilder = new StringBuilder();
-            for (Method operation: operations) {
+            for (Method operation : operations) {
                 operationsStringBuilder.append(operation.toString());
                 if (operation != operations.get(operations.size() - 1))
                     operationsStringBuilder.append(", ");
