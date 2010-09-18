@@ -29,7 +29,7 @@ class GenericProblem extends GPProblem {
      */
     public GenericProblem(GPConfiguration config, Method methodToEvolve,
                           List<Method> operations)
-        throws InvalidConfigurationException {
+            throws InvalidConfigurationException {
         super(config);
         this.methodToEvolve = methodToEvolve;
         this.operations = operations;
@@ -41,7 +41,7 @@ class GenericProblem extends GPProblem {
         Class<?>[] types = {
                 PrimitiveUtils.toCommandGene(methodToEvolve.getReturnType())
         };
-        
+
         List<Class<?>> argTypesList = new LinkedList<Class<?>>();
         for (Class<?> argType: methodToEvolve.getParameterTypes())
             argTypesList.add(PrimitiveUtils.toCommandGene(argType));
@@ -55,9 +55,9 @@ class GenericProblem extends GPProblem {
         List<CommandGene> nodeSetOperations = new LinkedList<CommandGene>();
         for (Method operation: operations)
             nodeSetOperations.add(new GenericCommand(config, operation));
-        
+
         CommandGene[][] nodeSets = { nodeSetOperations.toArray(
-                new CommandGene[nodeSetOperations.size()])};
+                new CommandGene[nodeSetOperations.size()]) };
 
         return GPGenotype.randomInitialGenotype(config, types, argTypes,
                 nodeSets, JavaUnitEvolution.getMaxInitialNodes(), true);

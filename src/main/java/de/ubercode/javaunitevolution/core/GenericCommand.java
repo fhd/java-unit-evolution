@@ -9,7 +9,7 @@ import org.jgap.gp.impl.*;
 /**
  * A command that will execute a arbitrary Java method.
  */
-class GenericCommand extends CommandGene {
+public class GenericCommand extends CommandGene {
     private static final long serialVersionUID = 1L;
     private Method operation;
     
@@ -25,7 +25,7 @@ class GenericCommand extends CommandGene {
               PrimitiveUtils.toCommandGene(operation.getReturnType()));
         this.operation = operation;
     }
-   
+    
     /*
      * TODO: All the execute methods are always called with the same number of
      *       parameters as the method that is to be involved. Arity seems to be
