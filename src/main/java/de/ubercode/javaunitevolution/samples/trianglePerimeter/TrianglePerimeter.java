@@ -21,17 +21,17 @@ public abstract class TrianglePerimeter {
      * @return The perimeter of the triangle.
      */
     public abstract int perimeter(int a, int b, int c);
-    
-    // TODO: The operations each have only two parameters.
-    
+
+    // TODO: The operations should each have only two parameters.
+
     public static int operationAdd(int a, int b, int c) {
         return a + b + c;
     }
-    
+
     public static int operationSubtract(int a, int b, int c) {
         return a - b - c;
     }
-    
+
     public static int operationMultiply(int a, int b, int c) {
         return a * b * c;
     }

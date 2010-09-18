@@ -189,7 +189,7 @@ public class JavaUnitEvolution {
     public static void setTimeout(int timeout) {
         JavaUnitEvolution.timeout = timeout;
     }
-    
+
     /**
      * @return The size of the genetic programming population.
      */
@@ -210,7 +210,7 @@ public class JavaUnitEvolution {
     public static int getMaxInitDepth() {
         return maxInitDepth;
     }
-    
+
     /**
      * @param maxInitDepth The maximum depth of initial program trees.
      */

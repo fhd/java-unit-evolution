@@ -35,7 +35,7 @@ class PrimitiveUtils {
     public static boolean isDouble(Class<?> clazz) {
         return Double.class.equals(clazz) || double.class.equals(clazz);
     }
-    
+
     /**
      * Checks whether the supplied class is a float type.
      * @param clazz The class to check.

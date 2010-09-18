@@ -24,7 +24,7 @@ class ProgramChromosomeMethodHandler implements MethodHandler {
         this.chromosome = chromosome;
         this.methodToInvoke = methodToInvoke;
     }
-    
+
     @Override
     public Object invoke(Object self, Method thisMethod,
                          Method proceed, Object[] args) throws Throwable {
@@ -50,5 +50,4 @@ class ProgramChromosomeMethodHandler implements MethodHandler {
         } else
             return chromosome.execute_object(args);
     }
-
 }

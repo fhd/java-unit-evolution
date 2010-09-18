@@ -18,7 +18,7 @@ public class TrianglePerimeterTest {
     public void trianglePerimeter1() {
         assertEquals(trianglePerimeter.perimeter(9, 2, 7), 18);
     }
-    
+
     @Test
     public void trianglePerimeter2() {
         assertEquals(trianglePerimeter.perimeter(3, 99, 38), 140);
