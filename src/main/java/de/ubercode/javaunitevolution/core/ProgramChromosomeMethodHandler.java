@@ -4,13 +4,13 @@ import java.lang.reflect.*;
 
 import javassist.util.proxy.*;
 
-import org.jgap.gp.*;
+import org.jgap.gp.impl.*;
 
 /**
- * A method handler that invokes the supplied GP program.
+ * A method handler that invokes the supplied GP program chromosome.
  */
-class GPProgramMethodHandler implements MethodHandler {
-    IGPProgram program;
+class ProgramChromosomeMethodHandler implements MethodHandler {
+    ProgramChromosome chromosome;
     Method methodToInvoke;
 
     /**
@@ -19,9 +19,9 @@ class GPProgramMethodHandler implements MethodHandler {
      * @param methodToInvoke The method whose invocations are processed by this
      *                       handler.
      */
-    public GPProgramMethodHandler(IGPProgram program,
-                                  Method methodToInvoke) {
-        this.program = program;
+    public ProgramChromosomeMethodHandler(ProgramChromosome chromosome,
+                                            Method methodToInvoke) {
+        this.chromosome = chromosome;
         this.methodToInvoke = methodToInvoke;
     }
     
@@ -37,18 +37,18 @@ class GPProgramMethodHandler implements MethodHandler {
         Class<?> returnType = thisMethod.getReturnType();
 
         if (PrimitiveUtils.isBoolean(returnType))
-            return program.execute_boolean(0, args);
+            return chromosome.execute_boolean(args);
         else if (PrimitiveUtils.isDouble(returnType))
-            return program.execute_double(0, args);
+            return chromosome.execute_double(args);
         else if (PrimitiveUtils.isFloat(returnType))
-            return program.execute_float(0, args);
+            return chromosome.execute_float(args);
         else if (PrimitiveUtils.isInteger(returnType))
-            return program.execute_int(0, args);
+            return chromosome.execute_int(args);
         else if (PrimitiveUtils.isVoid(returnType)) {
-            program.execute_void(0, args);
+            chromosome.execute_void(args);
             return null;
         } else
-            return program.execute_object(0, args);
+            return chromosome.execute_object(args);
     }
 
 }

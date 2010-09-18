@@ -14,7 +14,7 @@ import org.jgap.gp.impl.*;
  * The API of the Java Unit Evolution framework.
  */
 public class JavaUnitEvolution {
-    static IGPProgram currentProgram; // XXX: This is not nice.
+    static IGPProgram currentProgram;
     private static Logger LOGGER = Logger.getLogger(JavaUnitEvolution.class);
     private static GPGenotype gp;
     private static Method methodToEvolve;
@@ -24,7 +24,7 @@ public class JavaUnitEvolution {
     private static int populationSize = 500;
     private static int maxInitDepth = 6;
     private static int maxCrossoverDepth = 17;
-    private static int maxInitialNodes = 20; // XXX: Why is this necessary?
+    private static int maxInitialNodes = 20;
 
     /**
      * Evolves an implementation of the supplied abstract class using the
@@ -107,11 +107,13 @@ public class JavaUnitEvolution {
              * This is the implementation returned to each test case
              * during the fitness function's execution.
              */
-            return createImplementation(currentProgram, classToEvolve);
+            return createImplementation(currentProgram.getChromosome(0),
+                                        classToEvolve);
 
         // This is the final implementation, capable of passing all unit tests. 
-        // TODO: Store the final implementation somewhere
-        return createImplementation(gp.getAllTimeBest(), classToEvolve);
+        ProgramChromosome allTimeBest = gp.getAllTimeBest().getChromosome(0);
+        // TODO: Store the implementation.
+        return createImplementation(allTimeBest, classToEvolve);
     }
 
     private static GPConfiguration createConfig(Class<?> testClass)
@@ -149,7 +151,7 @@ public class JavaUnitEvolution {
                         + "timeout or supplying more test cases.");
     }
 
-    private static <T> T createImplementation(IGPProgram program,
+    private static <T> T createImplementation(ProgramChromosome chromosome,
                                               Class<T> clazz) {
         ProxyFactory factory = new ProxyFactory();
         factory.setSuperclass(clazz);
@@ -163,11 +165,12 @@ public class JavaUnitEvolution {
             );
 
         try {
+            MethodHandler handler =
+                new ProgramChromosomeMethodHandler(chromosome, methodToEvolve);
             return clazz.cast(factory.create(new Class<?>[0], new Object[0],
-                    new GPProgramMethodHandler(program, methodToEvolve)));
+                                             handler));
         } catch (Exception e) {
-            throw new RuntimeException("Unable to invoke generated program",
-                                       e);
+            throw new RuntimeException("Unable to invoke generated program", e);
         }		
     }
 
