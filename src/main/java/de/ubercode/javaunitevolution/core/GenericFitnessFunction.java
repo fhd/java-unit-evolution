@@ -46,7 +46,7 @@ class GenericFitnessFunction extends GPFitnessFunction {
      * @return The calculated delta.
      */
     private double extractDelta(AssertionError error) {
-        // XXX: Make this more fault tolerant
+        // XXX: Make this more robust.
         String message = error.getMessage();
         LOGGER.debug("Extracting assertion message: " + message);
         String expected = message.substring(message.indexOf("<") + 1,

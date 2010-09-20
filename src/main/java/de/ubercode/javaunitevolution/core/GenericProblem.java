@@ -37,7 +37,7 @@ class GenericProblem extends GPProblem {
 
     @Override
     public GPGenotype create() throws InvalidConfigurationException {
-        // Generate operands from the method's interface
+        // Generate operands from the method's interface.
         Class<?>[] types = {
                 PrimitiveUtils.toCommandGene(methodToEvolve.getReturnType())
         };
@@ -50,7 +50,7 @@ class GenericProblem extends GPProblem {
                 argTypesList.toArray(new Class<?>[argTypesList.size()])
         };
 
-        // Generate operations from interface
+        // Generate operations from the method's interface.
         GPConfiguration config = getGPConfiguration();
         List<CommandGene> nodeSetOperations = new LinkedList<CommandGene>();
         for (Method operation : operations)
