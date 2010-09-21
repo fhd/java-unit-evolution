@@ -65,7 +65,7 @@ class GenericFitnessFunction extends GPFitnessFunction {
                                     Integer.valueOf(actual));
                 } catch (NumberFormatException e3) {
                     // TODO: Try other data types
-                    return 0.0;
+                    return 1.0;
                 }
             }
         }
