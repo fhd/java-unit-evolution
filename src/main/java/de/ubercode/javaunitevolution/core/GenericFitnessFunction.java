@@ -57,12 +57,12 @@ class GenericFitnessFunction extends GPFitnessFunction {
             return Math.abs(Double.valueOf(expected) - Double.valueOf(actual));
         } catch (NumberFormatException e1) {
             try {
-                return Math.abs(Float.valueOf(expected) -
-                                Float.valueOf(actual));
+                return Math.abs(Float.valueOf(expected)
+                                - Float.valueOf(actual));
             } catch (NumberFormatException e2) {
                 try {
-                    return Math.abs(Integer.valueOf(expected) -
-                                    Integer.valueOf(actual));
+                    return Math.abs(Integer.valueOf(expected)
+                                    - Integer.valueOf(actual));
                 } catch (NumberFormatException e3) {
                     // TODO: Try other data types
                     return 1.0;
