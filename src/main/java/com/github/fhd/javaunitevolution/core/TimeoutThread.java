@@ -1,4 +1,4 @@
-package de.ubercode.javaunitevolution.core;
+package com.github.fhd.javaunitevolution.core;
 
 /**
  * A thread that waits for a given time and then stop the supplied thread.

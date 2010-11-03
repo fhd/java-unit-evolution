@@ -1,4 +1,4 @@
-package de.ubercode.javaunitevolution.samples.adding;
+package com.github.fhd.javaunitevolution.samples.adding;
 
 import static org.junit.Assert.*;
 
@@ -9,7 +9,7 @@ import org.junit.runner.*;
 import org.junit.runners.*;
 import org.junit.runners.Parameterized.Parameters;
 
-import de.ubercode.javaunitevolution.core.*;
+import com.github.fhd.javaunitevolution.core.*;
 
 /**
  * The test case that determines the fitness of {@link Adding}.

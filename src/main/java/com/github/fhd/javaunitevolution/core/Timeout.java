@@ -1,4 +1,4 @@
-package de.ubercode.javaunitevolution.core;
+package com.github.fhd.javaunitevolution.core;
 
 /**
  * A thread that will wait for the specified time, keeping track of the elapsed

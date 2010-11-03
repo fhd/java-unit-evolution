@@ -1,8 +1,15 @@
-Jetris
-======
+Java Unit Evolution
+===================
 
-A Java framework that uses unit testing and genetic programming to evolve
-programs.
+Evolve programs using unit testing and genetic programming.
+
+This code was produced as part of my Bachelor thesis at
+[The Open University](http://www.open.ac.uk). Despite the promising
+description, it is not possible to evolve anything but the most
+trivial programs. Java Unit Evolution is of no practical use in its
+current state.
+
+Please read *doc/java_unit_evolution.pdf* to learn more.
 
 Building
 --------
@@ -11,6 +18,24 @@ To build Java Unit Evolution, get [Apache Maven](http://maven.apache.org/) and
 execute:
 
 	mvn package
+	
+Usage
+-----
+
+The work flow is as follows:
+
+1. Specify the desired method as an abstract method of an abstract class.
+2. Specify all possible operations as non-abstract methods of the same class.
+3. Write JUnit test cases against the abstract method.
+4. Run the JUnit test cases.
+
+In the test case, instantiate the abstract class as follows:
+
+    private ClassToEvolve cte = JavaUnitEvolution.evolve(ClassToEvolve.class,
+                                                         getClass());
+
+There are a few examples in the
+*com.github.fhd.javaunitevolution.samples* package.
 
 License
 -------

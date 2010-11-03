@@ -1,4 +1,4 @@
-package de.ubercode.javaunitevolution.samples.adding;
+package com.github.fhd.javaunitevolution.samples.adding;
 
 /**
  * This sample aims to evolve a method that will add to numbers to demonstrate

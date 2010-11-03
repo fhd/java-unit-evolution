@@ -1,4 +1,4 @@
-package de.ubercode.javaunitevolution.core;
+package com.github.fhd.javaunitevolution.core;
 
 import java.lang.reflect.*;
 

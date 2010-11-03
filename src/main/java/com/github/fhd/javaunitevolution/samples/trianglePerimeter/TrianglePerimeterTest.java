@@ -1,10 +1,10 @@
-package de.ubercode.javaunitevolution.samples.trianglePerimeter;
+package com.github.fhd.javaunitevolution.samples.trianglePerimeter;
 
 import static org.junit.Assert.*;
 
 import org.junit.*;
 
-import de.ubercode.javaunitevolution.core.*;
+import com.github.fhd.javaunitevolution.core.*;
 
 /**
  * The test case that determines the fitness of {@link TrianglePerimeter}.
