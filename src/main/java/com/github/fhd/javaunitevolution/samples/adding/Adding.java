@@ -4,7 +4,7 @@ package com.github.fhd.javaunitevolution.samples.adding;
  * This sample aims to evolve a method that will add to numbers to demonstrate
  * the basics of Java Unit Evolution.
  * <p>
- * The algorithm will simply have to use the function for adition, which is
+ * The algorithm will simply have to use the function for addition, which is
  * among those it can use:
  * <ul>
  * <li>Addition
