@@ -9,7 +9,9 @@ description, it is not possible to evolve anything but the most
 trivial programs. Java Unit Evolution is of no practical use in its
 current state.
 
-Please read *doc/java_unit_evolution.pdf* to learn more.
+Please read
+[the paper](https://github.com/downloads/fhd/java-unit-evolution/java_unit_evolution.pdf)
+to learn more.
 
 Building
 --------
